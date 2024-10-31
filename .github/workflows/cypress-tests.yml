@@ -1,0 +1,29 @@
+# .github/workflows/cypress-tests.yml
+name: Cypress Tests
+
+on:
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20' # or the version your project uses
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run Cypress component tests
+        run: npm run test-component # Adjust based on your script for Cypress tests
+        env:
+          # Set any environment variables for Cypress here
+          CI: true
