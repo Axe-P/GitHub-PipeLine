@@ -24,26 +24,11 @@ jobs:
           CI: true
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
 
-      - name: Check environment variables
+      - name: Start the server and run Cypress tests
         run: |
-          echo "MONGODB_URI is set: ${{ secrets.MONGODB_URI != '' }}"
-          # Check length without exposing the value
-          echo "MONGODB_URI length: ${#MONGODB_URI}"
-        env:
-          MONGODB_URI: ${{ secrets.MONGODB_URI }}
-
-      - name: Start the server
-        run: |
-          npm run server-build-seed # Start the server in the foreground
+          npm run server-build-seed & # Start the server in the background
           sleep 5 # Wait for a few seconds to ensure the server is up
+          npm run test-component # Run component tests
+          npm run test # Run end-to-end tests
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
-
-      - name: Check server status
-        run: |
-          curl --retry 5 --retry-delay 5 http://localhost:3001 || echo "Server not responding" # Replace PORT with your server's port
-
-      - name: Run Cypress tests
-        run: |
-          npm run test-component # Run component tests
-          npm run test # Run tests
