@@ -36,6 +36,8 @@ jobs:
         run: |
           npm run server-build-seed # Start the server in the foreground
           sleep 5 # Wait for a few seconds to ensure the server is up
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
 
       - name: Check server status
         run: |
