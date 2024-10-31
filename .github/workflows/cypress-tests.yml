@@ -31,5 +31,3 @@ jobs:
           npm run test-component # Run component tests
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
-
-# testing
