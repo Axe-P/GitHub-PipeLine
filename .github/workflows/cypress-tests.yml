@@ -1,0 +1,33 @@
+name: Cypress Tests
+
+on:
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+        env:
+          CI: true
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+
+      - name: Start the server and run Cypress tests
+        run: |
+          npm run build && npm run develop & # Start the server in the background
+          sleep 5 # Wait for a few seconds to ensure the server is up
+          npm run test-component # Run component tests
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
