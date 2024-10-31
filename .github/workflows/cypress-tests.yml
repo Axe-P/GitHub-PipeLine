@@ -26,7 +26,7 @@ jobs:
 
       - name: Start the server and run Cypress tests
         run: |
-          npm run server-build-seed & # Start the server in the background
+          npm run build && npm run develop & # Start the server in the background
           sleep 5 # Wait for a few seconds to ensure the server is up
           npm run test-component # Run component tests
           npm run test # Run end-to-end tests
