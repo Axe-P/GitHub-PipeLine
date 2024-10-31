@@ -18,6 +18,7 @@
 ## Usage
 
 Use the provided website [here](https://github-pipeline.onrender.com).
+![Deployed Site](assets/deployedsite.png)
 
 ## Run tests
 
@@ -39,6 +40,7 @@ Contributions, issues and feature requests are welcome!
 
 Copyright © 2024 [Axel Paxton](https://github.com/Axe-P).<br />
 This project is [MIT](https://opensource.org/license/mit) licensed.
+
 
 ***
 This README was generated with ❤️
