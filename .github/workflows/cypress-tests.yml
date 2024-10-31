@@ -1,4 +1,3 @@
-# .github/workflows/cypress-tests.yml
 name: Cypress Tests
 
 on:
@@ -22,8 +21,16 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Check environment variables
+        run: |
+          echo "MONGODB_URI is set: ${{ secrets.MONGODB_URI != '' }}"
+          # Avoid logging sensitive data
+          echo "MONGODB_URI length: ${#MONGODB_URI}" # Check length without exposing the value
+
       - name: Start the server
-        run: npm run server-build-seed && npm run start
+        run: |
+          npm run server-build-seed & # Start in the background
+          sleep 5 # Wait for a few seconds to ensure the server is up
 
       - name: Run Cypress tests
         run: |
@@ -32,3 +39,7 @@ jobs:
         env:
           CI: true
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
+
+      - name: Check server status
+        run: |
+          curl --retry 5 --retry-delay 5 http://localhost:PORT || echo "Server not responding" # Replace PORT with your server's port
