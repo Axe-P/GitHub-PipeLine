@@ -27,19 +27,21 @@ jobs:
       - name: Check environment variables
         run: |
           echo "MONGODB_URI is set: ${{ secrets.MONGODB_URI != '' }}"
-          # Avoid logging sensitive data
-          echo "MONGODB_URI length: ${#MONGODB_URI}" # Check length without exposing the value
+          # Check length without exposing the value
+          echo "MONGODB_URI length: ${#MONGODB_URI}"
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
 
       - name: Start the server
         run: |
-          npm run server-build-seed & # Start in the background
+          npm run server-build-seed # Start the server in the foreground
           sleep 5 # Wait for a few seconds to ensure the server is up
+
+      - name: Check server status
+        run: |
+          curl --retry 5 --retry-delay 5 http://localhost:3001 || echo "Server not responding" # Replace PORT with your server's port
 
       - name: Run Cypress tests
         run: |
           npm run test-component # Run component tests
           npm run test # Run tests
-
-      - name: Check server status
-        run: |
-          curl --retry 5 --retry-delay 5 http://localhost:PORT || echo "Server not responding" # Replace PORT with your server's port
