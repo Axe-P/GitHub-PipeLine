@@ -26,6 +26,5 @@ jobs:
         run: |
           npm run test # Run all tests
           npm run test-component # Run component tests
-          npm run test-gui # Optionally run GUI tests (this opens the GUI, so might not be suitable for CI)
         env:
           CI: true
