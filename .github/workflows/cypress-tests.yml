@@ -20,6 +20,9 @@ jobs:
 
       - name: Install dependencies
         run: npm install
+        env:
+          CI: true
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
 
       - name: Check environment variables
         run: |
@@ -36,9 +39,6 @@ jobs:
         run: |
           npm run test-component # Run component tests
           npm run test # Run tests
-        env:
-          CI: true
-          MONGODB_URI: ${{ secrets.MONGODB_URI }}
 
       - name: Check server status
         run: |
