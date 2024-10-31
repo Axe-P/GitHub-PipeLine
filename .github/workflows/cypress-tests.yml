@@ -22,8 +22,8 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Start the app
-        run: npm run build && npm run start
+      - name: Start the server
+        run: npm run server-build-seed && npm run start
 
       - name: Run Cypress tests
         run: |
